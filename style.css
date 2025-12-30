@@ -1,69 +1,174 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
-
+/* Base body with animated gradient */
 body {
-    height: 100vh;
-    background: radial-gradient(circle at top, #1a1a40, #000);
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    text-align: center;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    overflow: hidden;
+    position: relative;
 }
 
-/* Main container */
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
 .container {
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    z-index: 2;
     padding: 20px;
-    max-width: 400px;
 }
 
-/* 3D Text */
+/* Canvas for fireworks */
+#fireworks {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 3D Glowing Text */
 .text3d {
-    font-size: clamp(2rem, 8vw, 3rem);
-    color: #61dafb;
-    transform: perspective(500px) rotateX(20deg);
+    font-size: 2.5rem;
+    font-weight: bold;
     text-shadow:
-        1px 1px 0 #ff004f,
-        2px 2px 0 #ff004f,
-        3px 3px 10px rgba(255,0,79,0.8);
-    animation: pop 1s ease-out;
+        0 0 5px #fff,
+        0 0 10px #00f0ff,
+        0 0 20px #ff004f,
+        0 0 40px #00f0ff,
+        0 0 80px #ff004f;
+    animation: glow 2s infinite alternate;
 }
 
-/* Subtitle */
+@keyframes glow {
+    from { text-shadow: 0 0 5px #fff, 0 0 10px #00f0ff, 0 0 20px #ff004f; }
+    to { text-shadow: 0 0 10px #fff, 0 0 20px #00f0ff, 0 0 40px #ff004f; }
+}
+
+/* Name Styling */
+.name {
+    font-size: 1.6rem;
+    color: #00f0ff;
+    margin: 10px 0;
+    text-shadow: 0 0 10px #00f0ff, 0 0 20px #ff004f;
+}
+
+/* Wishes */
 .subtitle {
-    margin: 15px 0;
     font-size: 1rem;
-    opacity: 0.9;
+    line-height: 1.6;
+    opacity: 0.95;
+    margin: 15px 0 20px;
+    animation: textGlow 3s ease-in-out infinite alternate;
 }
 
-/* Spotify Box */
-.music-box {
-    margin-top: 20px;
-    background: rgba(255,255,255,0.05);
-    padding: 12px;
+@keyframes textGlow {
+    from { text-shadow: 0 0 2px #fff; }
+    to { text-shadow: 0 0 8px #ff004f, 0 0 12px #00f0ff; }
+}
+
+/* Photo Gallery */
+.gallery {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.gallery img {
+    width: 90px;
+    height: 90px;
     border-radius: 16px;
-    backdrop-filter: blur(6px);
+    object-fit: cover;
+    box-shadow: 0 0 10px #00f0ff, 0 0 20px #ff004f;
+    transition: transform 0.5s, box-shadow 0.5s;
 }
 
-/* Hint text */
-.tap {
-    margin-top: 8px;
+.gallery img:hover {
+    transform: scale(1.15) rotate(3deg);
+    box-shadow: 0 0 25px #00f0ff, 0 0 35px #ff004f;
+}
+
+/* Music Box Glow */
+.music-box iframe {
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00f0ff, 0 0 25px #ff004f;
+    transition: box-shadow 0.5s;
+}
+
+.music-box iframe:hover {
+    box-shadow: 0 0 25px #00f0ff, 0 0 40px #ff004f;
+}
+
+/* Developer Badge */
+.developer {
+    margin-top: 20px;
     font-size: 0.8rem;
-    opacity: 0.7;
+    background: rgba(0, 0, 0, 0.7); /* darker */
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #00f0ff, 0 0 30px #ff004f;
+    color: #fff; /* ensures text is visible */
+    z-index: 3; /* bring above container */
+    position: relative;
+    font-weight: bold;
 }
 
-/* Animation */
-@keyframes pop {
-    from {
-        transform: perspective(500px) rotateX(60deg) scale(0.7);
-        opacity: 0;
-    }
-    to {
-        transform: perspective(500px) rotateX(20deg) scale(1);
-        opacity: 1;
-    }
+
+.developer span {
+    color: #00f0ff;
+    text-shadow: 0 0 5px #00f0ff, 0 0 10px #ff004f;
+}
+
+/* Side Decorations */
+.left-side, .right-side {
+    position: fixed;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255,0,79,0.3), rgba(255,0,79,0));
+    animation: shimmer 6s infinite linear;
+}
+
+.right-side {
+    right: 0;
+    background: linear-gradient(to bottom, rgba(0,240,255,0.3), rgba(0,240,255,0));
+}
+
+.left-side { left: 0; }
+
+@keyframes shimmer {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+}
+
+/* Floating images animation */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .text3d { font-size: 2rem; }
+    .name { font-size: 1.4rem; }
+    .gallery img { width: 70px; height: 70px; }
+    .left-side, .right-side { width: 50px; }
 }
