@@ -1,4 +1,4 @@
-console.log("🎆Advance  Happy New Year 2026 🎆");
+console.log("Happy New Year 2026 🎆");
 
 // Title glow animation
 const text = document.querySelector(".text3d");
